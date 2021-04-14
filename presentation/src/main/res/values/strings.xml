@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SuperHero</string>
+    <string name="intelligence">Intelligence</string>
+    <string name="strength">Strength</string>
+    <string name="speed">Speed</string>
+    <string name="durability">Durability</string>
+    <string name="power">Power</string>
+    <string name="combat">Combat</string>
+    <string name="insert_hero_name">Search by name</string>
+    <string name="missing_favourites">No favourite heroes on the list.\nYou can add them by hero details</string>
+    <string name="missing_results">No results for \"%1$s\" query</string>
+    <string name="label_alter_ego">Alter-eg0:</string>
+    <string name="label_full_name">Full name:</string>
+
+    <string name="content_description_close_button">close button</string>
+    <string name="content_description_picture">picture</string>
+</resources>

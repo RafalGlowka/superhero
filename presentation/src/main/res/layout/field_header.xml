@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="fieldModel"
+            type="com.glowka.rafal.superhero.presentation.binding.fields.HeaderFieldBindingModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/background2"
+        android:padding="@dimen/margin_small">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/closeIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="@dimen/margin_small"
+            android:contentDescription="@string/content_description_close_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:loadImage="@{fieldModel.closeIcon.image}"
+            app:onClick="@{fieldModel.closeIcon.action}"
+            app:visible="@{fieldModel.closeIcon.visible}" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/favIcon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/closeIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:loadImage="@{fieldModel.favIcon.image}"
+            app:onClick="@{fieldModel.favIcon.action}"
+            app:visible="@{fieldModel.favIcon.visible}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/label"
+            style="@style/FieldText.Header"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin"
+            android:paddingRight="@dimen/margin"
+            android:text="@{fieldModel.label.text}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/favIcon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

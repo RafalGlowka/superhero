@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="itemModel"
+            type="com.glowka.rafal.superhero.presentation.flow.dashboard.list.ListItemModel.HeroCard" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:foregroundGravity="center|bottom"
+            android:contentDescription="@string/content_description_picture"
+            android:src="@drawable/loading_animation"
+            app:layout_constraintBottom_toTopOf="@id/name"
+            app:layout_constraintTop_toTopOf="parent"
+            app:loadImage="@{itemModel.image.image}" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/favIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintRight_toRightOf="@id/image"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            app:loadImage="@{itemModel.favIcon.image}"
+            app:visible="@{itemModel.favIcon.visible}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/FieldText"
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{itemModel.heroName}"
+            android:textColor="@color/text"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SuperHero</string>
+    <string name="intelligence">Inteligencja</string>
+    <string name="strength">Siła</string>
+    <string name="speed">Szybkość</string>
+    <string name="durability">Odporność</string>
+    <string name="power">Siła</string>
+    <string name="combat">Walka</string>
+    <string name="insert_hero_name">Wyszukaj po nazwie</string>
+    <string name="missing_favourites">Nie masz ulubionych bochaterów.\nSkorzystać z wyszukiwarki</string>
+    <string name="missing_results">Nie ma bochaterów dla frazy \"%1$s\"</string>
+    <string name="label_alter_ego">Alter Ega:</string>
+    <string name="label_full_name">Personalia: </string>
+
+    <string name="content_description_close_button">Przycisk zamknij</string>
+    <string name="content_description_picture">Obrazek</string>
+</resources>
