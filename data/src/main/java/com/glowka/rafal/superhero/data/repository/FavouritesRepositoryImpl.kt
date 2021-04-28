@@ -1,8 +1,8 @@
 package com.glowka.rafal.superhero.data.repository
 
 import android.content.SharedPreferences
+import com.glowka.rafal.superhero.data.remote.JSONSerializer
 import com.glowka.rafal.superhero.domain.repository.FavouritesRepository
-import com.glowka.rafal.superhero.remote.JSONSerializer
 import io.reactivex.Completable
 import io.reactivex.Single
 

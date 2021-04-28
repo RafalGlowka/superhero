@@ -1,9 +1,9 @@
 package com.glowka.rafal.superheroes.modules
 
-import com.glowka.rafal.superhero.remote.JSONSerializer
-import com.glowka.rafal.superhero.remote.JSONSerializerImpl
-import com.glowka.rafal.superhero.remote.RestClient
-import com.glowka.rafal.superhero.remote.RestClientImpl
+import com.glowka.rafal.superhero.data.remote.JSONSerializer
+import com.glowka.rafal.superhero.data.remote.JSONSerializerImpl
+import com.glowka.rafal.superhero.data.remote.RestClient
+import com.glowka.rafal.superhero.data.remote.RestClientImpl
 import okhttp3.OkHttpClient
 import org.koin.dsl.module
 

@@ -21,10 +21,18 @@ class LoadFavouritesUseCaseImpl(
     return favouritesRepository.loadFavorites()
       .flattenAsObservable { list -> list }
       .flatMapSingle { heroId ->
-        heroRepository.searchById(id = heroId).onErrorReturnItem(Hero.EMPTY)
+        heroRepository
+          .searchById(id = heroId)
+          .onErrorReturnItem(Hero.EMPTY)
       }
       .toList()
-      .map { list -> list.filter { item -> item != Hero.EMPTY }.filterNotNull() }
+      .map { list ->
+        list
+          .filter { item ->
+            item != Hero.EMPTY
+          }
+          .filterNotNull()
+      }
   }
 
 }

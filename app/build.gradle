@@ -47,6 +47,5 @@ dependencies {
     implementation "org.koin:koin-core:$koin_version"
     implementation "org.koin:koin-android:$koin_version"
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-//    implementation "org.koin:koin-androidx-scope:$koin_version"
     implementation "org.koin:koin-androidx-fragment:$koin_version"
 }

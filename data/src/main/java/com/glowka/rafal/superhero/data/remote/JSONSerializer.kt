@@ -1,14 +1,13 @@
-package com.glowka.rafal.superhero.remote
+package com.glowka.rafal.superhero.data.remote
 
 import com.google.gson.GsonBuilder
-import java.lang.reflect.Type
 
 /**
  * Created by Rafal on 14.04.2021.
  */
 interface JSONSerializer {
   fun <DATA> toJSON(data: DATA): String
-  fun <DATA> fromJSON(string: String, type: Type): DATA
+  fun <DATA> fromJSON(string: String, clazz: Class<DATA>): DATA
 }
 
 class JSONSerializerImpl : JSONSerializer {
@@ -21,8 +20,8 @@ class JSONSerializerImpl : JSONSerializer {
     return gson.toJson(data)
   }
 
-  override fun <DATA> fromJSON(string: String, type: Type): DATA {
-    return gson.fromJson(string, type) as DATA
+  override fun <DATA> fromJSON(string: String, clazz: Class<DATA>): DATA {
+    return gson.fromJson(string, clazz) as DATA
   }
 
 }

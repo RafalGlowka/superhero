@@ -1,4 +1,4 @@
-package com.glowka.rafal.superhero.remote
+package com.glowka.rafal.superhero.data.remote
 
 import com.glowka.rafal.superhero.domain.utils.EMPTY
 import com.glowka.rafal.superhero.domain.utils.logD
@@ -12,14 +12,21 @@ import kotlin.reflect.KClass
  * Created by Rafal on 14.04.2021.
  */
 
-interface RestClient {
-  fun <RESULT : Any> post(
-    url: String,
-    data: ByteArray? = null,
-    resultClass: KClass<RESULT>
-  ): Single<RESULT>
+enum class RequestType(val method: String) {
+  POST("POST"),
+  GET("GET")
+}
 
-  fun <RESULT : Any> get(url: String, resultClass: KClass<RESULT>): Single<RESULT>
+class RestRequest<RESULT : Any>(
+  val type: RequestType,
+  val url: String,
+  val resultClass: KClass<RESULT>,
+  val data: ByteArray? = null,
+)
+
+interface RestClient {
+
+  fun <RESULT : Any> execute(request: RestRequest<RESULT>): Single<RESULT>
 }
 
 class RestClientImpl(
@@ -27,28 +34,15 @@ class RestClientImpl(
   private val jsonSerializer: JSONSerializer
 ) : RestClient {
 
-  override fun <RESULT : Any> post(
-    url: String,
-    data: ByteArray?,
-    resultClass: KClass<RESULT>
-  ): Single<RESULT> {
-    val requestBody = data?.let { data -> RequestBody.create(null, data) }
+  override fun <RESULT : Any> execute(request: RestRequest<RESULT>): Single<RESULT> {
+    val requestBody = request.data?.let { data -> RequestBody.create(null, data) }
 
-    val request = Request.Builder()
-      .url(url)
-      .method("POST", requestBody)
+    val okHttpRequest = Request.Builder()
+      .url(request.url)
+      .method(request.type.method, requestBody)
       .build()
 
-    return executeRequest(request, resultClass)
-  }
-
-  override fun <RESULT : Any> get(url: String, resultClass: KClass<RESULT>): Single<RESULT> {
-    val request = Request.Builder()
-      .url(url)
-      .method("GET", null)
-      .build()
-
-    return executeRequest(request, resultClass)
+    return executeRequest(okHttpRequest, request.resultClass)
   }
 
   private fun <RESULT : Any> executeRequest(
@@ -73,4 +67,6 @@ class RestClientImpl(
       } else throw ConnectException()
     }
   }
+
+
 }

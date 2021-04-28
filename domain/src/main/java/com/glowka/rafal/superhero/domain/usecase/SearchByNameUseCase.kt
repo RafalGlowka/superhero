@@ -13,6 +13,7 @@ class SearchByNameUseCaseImpl(
   private val heroRepository: HeroRepository
 ) : SearchByNameUseCase {
   override fun invoke(param: String): Single<List<Hero>> {
-    return heroRepository.searchByName(name = param)
+    return heroRepository
+      .searchByName(name = param)
   }
 }

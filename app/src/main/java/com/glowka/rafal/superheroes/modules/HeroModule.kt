@@ -6,6 +6,8 @@ import com.glowka.rafal.superhero.data.repository.FavouritesRepositoryImpl
 import com.glowka.rafal.superhero.data.repository.HeroRepositoryImpl
 import com.glowka.rafal.superhero.data.repository.cache.HeroCache
 import com.glowka.rafal.superhero.data.repository.cache.HeroCacheImpl
+import com.glowka.rafal.superhero.data.requestFactory.HeroRequestFactory
+import com.glowka.rafal.superhero.data.requestFactory.HeroRequestFactoryImpl
 import com.glowka.rafal.superhero.domain.repository.FavouritesRepository
 import com.glowka.rafal.superhero.domain.repository.HeroRepository
 import com.glowka.rafal.superhero.domain.usecase.*
@@ -33,8 +35,13 @@ val heroModule = module {
     )
   }
 
+  single<HeroRequestFactory> {
+    HeroRequestFactoryImpl()
+  }
+
   single<HeroRepository> {
     HeroRepositoryImpl(
+      heroRequestFactory = get(),
       restClient = get(),
       cache = get(),
     )

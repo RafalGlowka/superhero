@@ -1,5 +1,6 @@
 package com.glowka.rafal.superhero.domain.usecase
 
+import com.glowka.rafal.superhero.domain.model.Hero
 import com.glowka.rafal.superhero.domain.repository.FavouritesRepository
 import com.glowka.rafal.superhero.domain.repository.HeroRepository
 import com.glowka.rafal.superhero.domain.utils.EmptyParam
@@ -15,9 +16,15 @@ class PrepareCacheUseCaseImpl(
   private val heroRepository: HeroRepository,
 ) : PrepareCacheUseCase {
   override fun invoke(param: EmptyParam): Completable {
-    return favouritesRepository.loadFavorites()
+    return favouritesRepository
+      .loadFavorites()
       .flattenAsObservable { list -> list }
-      .flatMapSingle { heroId -> heroRepository.searchById(id = heroId).onErrorReturnItem(null) }
-      .toList().ignoreElement()
+      .flatMapSingle { heroId ->
+        heroRepository
+          .searchById(id = heroId)
+          .onErrorReturnItem(Hero.EMPTY)
+      }
+      .toList()
+      .ignoreElement()
   }
 }

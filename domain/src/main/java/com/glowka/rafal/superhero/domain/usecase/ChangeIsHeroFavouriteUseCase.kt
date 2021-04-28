@@ -35,13 +35,23 @@ class ChangeIsHeroFavouriteUseCaseImpl(
         }
         newList
       }
-      .flatMap { list -> favouritesRepository.saveFavourites(list).toSingleDefault(list) }
+      .flatMap { list ->
+        favouritesRepository
+          .saveFavourites(list)
+          .toSingleDefault(list)
+      }
       .flattenAsObservable { list -> list }
       .flatMapSingle { heroId ->
-        heroRepository.searchById(id = heroId).onErrorReturnItem(Hero.EMPTY)
+        heroRepository
+          .searchById(id = heroId)
+          .onErrorReturnItem(Hero.EMPTY)
       }
       .toList()
-      .map { list -> list.filter { item -> item != Hero.EMPTY }.filterNotNull() }
+      .map { list ->
+        list
+          .filter { item -> item != Hero.EMPTY }
+          .filterNotNull()
+      }
   }
 
 }

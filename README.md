@@ -21,9 +21,10 @@ The purpose of this application is to show usage of some basic libraries and arc
 
 
 Further developement should be focused on:
-* Unit tests
 * detect
-* Support for animations and transitions.
+* androidTests
+* Support for animations and transitions
 * More consistent form of FlowInstance
+* Prepare few branch-es with different set of components
 
 
