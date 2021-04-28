@@ -1,5 +1,7 @@
 package com.glowka.rafal.superheroes.modules
 
+import com.glowka.rafal.superhero.data.repository.sharedpreferences.SharedPreferencesRepository
+import com.glowka.rafal.superhero.data.repository.sharedpreferences.SharedPreferencesRepositoryImpl
 import com.glowka.rafal.superhero.domain.utils.StringResolver
 import com.glowka.rafal.superhero.presentation.architecture.FragmentNavigator
 import com.glowka.rafal.superhero.presentation.architecture.FragmentNavigatorAttachment
@@ -20,6 +22,14 @@ val appModule = module {
   } binds arrayOf(FragmentNavigatorAttachment::class, FragmentNavigator::class)
 
   single<StringResolver> {
-    StringResolverImpl(context = androidContext())
+    StringResolverImpl(
+      context = androidContext()
+    )
+  }
+
+  single<SharedPreferencesRepository> {
+    SharedPreferencesRepositoryImpl(
+      context = androidContext()
+    )
   }
 }

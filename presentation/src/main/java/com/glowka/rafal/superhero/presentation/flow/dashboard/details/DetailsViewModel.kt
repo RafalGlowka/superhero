@@ -72,6 +72,12 @@ class DetailsViewModelImpl(
 
   override fun init(param: Param) {
     this.param = param
+    setHeader(param = param)
+    setBasicData(hero = param.hero)
+    updateStats(hero = param.hero)
+  }
+
+  private fun setHeader(param: Param) {
     header.label.text.postValue(param.hero.name)
     header.closeIcon.action.postValue(::closeScreen)
     val favIconResId = if (param.isFavourite) {
@@ -81,55 +87,56 @@ class DetailsViewModelImpl(
     }
     header.favIcon.image.postValue(ImageModel(fallbackImageResId = favIconResId))
     header.favIcon.action.postValue(::onFavouriteClick)
-    fullName.text.postValue(param.hero.biography?.`full-name` ?: String.EMPTY)
+  }
+
+  private fun setBasicData(hero: Hero) {
+    fullName.text.postValue(hero.biography?.`full-name` ?: String.EMPTY)
     image.image.postValue(
       ImageModel(
-        url = param.hero.image.url,
+        url = hero.image.url,
         fallbackImageResId = R.drawable.hero_fallback
       )
     )
+    alterEgo.value.text.postValue(hero.biography?.`alter-egos` ?: String.EMPTY)
+  }
+
+  private fun updateStats(hero: Hero) {
     stats.postValue(
       Stats(
-        inteligence = ProgressFieldBindingModel(
-          initialLabel = stringResolver(R.string.intelligence),
-          initialProgress = ProgressPosition(
-            position = param.hero.powerstats?.inteligence?.safeToInt() ?: 0
-          )
+        inteligence = progressField(
+          labelResId = R.string.intelligence,
+          value = hero.powerstats?.inteligence
         ),
-        strength = ProgressFieldBindingModel(
-          initialLabel = stringResolver(R.string.strength),
-          initialProgress = ProgressPosition(
-            position = param.hero.powerstats?.strength?.safeToInt() ?: 0
-          )
+        strength = progressField(
+          labelResId = R.string.strength,
+          value = hero.powerstats?.strength
         ),
-        speed = ProgressFieldBindingModel(
-          initialLabel = stringResolver(R.string.speed),
-          initialProgress = ProgressPosition(
-            position = param.hero.powerstats?.speed?.safeToInt() ?: 0
-          )
+        speed = progressField(
+          labelResId = R.string.speed,
+          value = hero.powerstats?.speed
         ),
-        durability = ProgressFieldBindingModel(
-          initialLabel = stringResolver(R.string.durability),
-          initialProgress = ProgressPosition(
-            position = param.hero.powerstats?.durability?.safeToInt() ?: 0
-          )
+        durability = progressField(
+          labelResId = R.string.durability,
+          value = hero.powerstats?.durability
         ),
-        power = ProgressFieldBindingModel(
-          initialLabel = stringResolver(R.string.power),
-          initialProgress = ProgressPosition(
-            position = param.hero.powerstats?.power?.safeToInt() ?: 0
-          )
+        power = progressField(
+          labelResId = R.string.power,
+          value = hero.powerstats?.power
         ),
-        combat = ProgressFieldBindingModel(
-          initialLabel = stringResolver(R.string.combat),
-          initialProgress = ProgressPosition(
-            position = param.hero.powerstats?.combat?.safeToInt() ?: 0
-          )
+        combat = progressField(
+          labelResId = R.string.combat,
+          value = hero.powerstats?.combat
         ),
       )
     )
-    alterEgo.value.text.postValue(param.hero.biography?.`alter-egos` ?: String.EMPTY)
   }
+
+  private fun progressField(labelResId: Int, value: String?) = ProgressFieldBindingModel(
+    initialLabel = stringResolver(labelResId),
+    initialProgress = ProgressPosition(
+      position = value?.safeToInt() ?: 0
+    )
+  )
 
   private fun String.safeToInt(): Int {
     return try {
@@ -141,8 +148,11 @@ class DetailsViewModelImpl(
 
   private fun onFavouriteClick() {
     param = Param(hero = param.hero, isFavourite = !param.isFavourite)
-    val favIconResId =
-      if (param.isFavourite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off
+    val favIconResId = if (param.isFavourite) {
+      R.drawable.ic_favorite_on
+    } else {
+      R.drawable.ic_favorite_off
+    }
     header.favIcon.image.postValue(ImageModel(fallbackImageResId = favIconResId))
 
     changeIsHeroFavouriteUseCase(
@@ -151,7 +161,8 @@ class DetailsViewModelImpl(
         isFavourite = param.isFavourite
       )
     ).subscribeBy(
-      onSuccess = {
+      onSuccess = { _ ->
+        // Nop
       },
       onError = { error -> logE("saving changed", error) }
     ).disposedByHost()

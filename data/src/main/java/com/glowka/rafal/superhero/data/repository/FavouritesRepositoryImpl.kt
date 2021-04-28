@@ -1,7 +1,7 @@
 package com.glowka.rafal.superhero.data.repository
 
-import android.content.SharedPreferences
 import com.glowka.rafal.superhero.data.remote.JSONSerializer
+import com.glowka.rafal.superhero.data.repository.sharedpreferences.SharedPreferencesRepository
 import com.glowka.rafal.superhero.domain.repository.FavouritesRepository
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -10,14 +10,16 @@ import io.reactivex.Single
  * Created by Rafal on 17.04.2021.
  */
 class FavouritesRepositoryImpl(
-  val sharedPreferences: SharedPreferences,
-  val jsonSerializer: JSONSerializer
+  sharedPreferencesRepository: SharedPreferencesRepository,
+  private val jsonSerializer: JSONSerializer
 ) : FavouritesRepository {
 
   companion object {
     const val FIELD_FAVOURITES = "favourites"
     val DEFAULT_FAVOURITES = listOf("649", "78", "9")
   }
+
+  val sharedPreferences = sharedPreferencesRepository.getFavouritesSharedPreferences()
 
   class FavouritesFieldType : ArrayList<String>()
 
@@ -26,7 +28,7 @@ class FavouritesRepositoryImpl(
     if (data == null) {
       DEFAULT_FAVOURITES
     } else {
-      jsonSerializer.fromJSON<FavouritesFieldType>(data, FavouritesFieldType::class.java)
+      jsonSerializer.fromJSON(data, FavouritesFieldType::class.java)
     }
   }
 

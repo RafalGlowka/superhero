@@ -42,7 +42,3 @@ class Hero(
     )
   }
 }
-
-fun Hero.isDC(): Boolean {
-  return biography?.publisher == "DC Comics"
-}

@@ -44,8 +44,10 @@ class ListViewModelImpl(
 ) : ListViewModelToViewInterface, ListViewModelToFlowInterface, BaseViewModel<EmptyParam, Event>(
   backPressedEvent = Event.Back
 ) {
-  override val searchField =
-    EditTextBindingModel(initialHint = stringResolver(R.string.insert_hero_name), initialText = "")
+  override val searchField = EditTextBindingModel(
+    initialHint = stringResolver(R.string.search_by_name_hint),
+    initialText = stringResolver(R.string.search_by_name_initial_text)
+  )
   override val items = MutableLiveData<List<ListItemModel>>()
   override val message = TextBindingModel(initialText = String.EMPTY)
 
@@ -60,11 +62,10 @@ class ListViewModelImpl(
     refreshFavourites()
 
     searchField.text.observeForever { newValue ->
-      logD("text change notified [$newValue]")
       searchDisposable.clear()
       searchDisposable = CompositeDisposable()
       if (newValue.isEmpty() || newValue.isBlank()) {
-        favourites?.let { f -> updateList(heros = f) } ?: logE("has no favourites")
+        favourites?.let { f -> updateList(heroes = f) } ?: logE("has no favourites")
       } else {
         searchByNameUseCase(param = newValue).subscribeBy(
           onSuccess = ::updateList,
@@ -76,17 +77,21 @@ class ListViewModelImpl(
     }
   }
 
-  private fun updateList(heros: List<Hero>) {
-    logD("updateList ${heros.size}")
-    if (heros.isEmpty()) {
+  private fun updateList(heroes: List<Hero>) {
+    logD("updateList ${heroes.size}")
+    if (heroes.isEmpty()) {
       val query = searchField.text.value
-      if (query?.isEmpty() != false) message.text.postValue(stringResolver(R.string.missing_favourites)) else
-        message.text.postValue(stringResolver(R.string.missing_results, query))
+      val errorMessage = if (query?.isEmpty() != false) {
+        stringResolver(R.string.missing_favourites)
+      } else {
+        stringResolver(R.string.missing_results, query)
+      }
+      message.text.postValue(errorMessage)
       message.visible.postValue(true)
       items.postValue(emptyList())
     } else {
       message.visible.postValue(false)
-      items.postValue(heros.map { hero ->
+      items.postValue(heroes.map { hero ->
         ListItemModel.HeroCard(
           hero = hero,
           isFavourite = favourites?.contains(hero) ?: false
@@ -99,7 +104,6 @@ class ListViewModelImpl(
     loadFavouritesUseCase(EmptyParam.EMPTY)
       .subscribeBy(
         onSuccess = { result ->
-          logD("received favourites $result")
           favourites = result
           if (searchField.text.value?.isBlank() == true || searchField.text.value?.isEmpty() == true) {
             updateList(result)
@@ -108,13 +112,14 @@ class ListViewModelImpl(
             val updatedList = items.value?.toMutableList()?.map { item ->
               when (item) {
                 is ListItemModel.HeroCard -> item.hero
-                else -> null
               }
-            }?.filterNotNull() ?: emptyList()
-            updateList(heros = updatedList)
+            } ?: emptyList()
+            updateList(heroes = updatedList)
           }
         },
-        onError = { error -> logE("getting favourites", error) }
+        onError = { error ->
+          logE("getting favourites", error)
+        }
       ).disposedByHost()
 
   }

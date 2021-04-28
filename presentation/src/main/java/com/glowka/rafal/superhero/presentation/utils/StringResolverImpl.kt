@@ -6,7 +6,10 @@ import com.glowka.rafal.superhero.domain.utils.StringResolver
 /**
  * Created by Rafal on 17.04.2021.
  */
-class StringResolverImpl(val context: Context) : StringResolver {
+class StringResolverImpl(
+  val context: Context,
+) : StringResolver {
+
   override fun invoke(resId: Int): String {
     return context.getString(resId)
   }
