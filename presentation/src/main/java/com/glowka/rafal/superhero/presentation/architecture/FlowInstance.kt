@@ -14,7 +14,8 @@ import org.koin.core.qualifier.StringQualifier
 /**
  * Created by Rafal on 15.04.2021.
  */
-data class FlowDestination<PARAM : Any, EVENT : ScreenEvent, VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>>(
+data class FlowDestination<PARAM : Any, EVENT : ScreenEvent,
+    VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>>(
   val screen: Screen<PARAM, EVENT, *, VIEWMODEL_TO_FLOW>,
   val param: PARAM
 )
@@ -70,7 +71,8 @@ abstract class FlowInstance<FLOW_PARAM, FLOW_RESULT : Any>(
   }
 }
 
-inline fun <PARAM : Any, EVENT : ScreenEvent, VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> FlowInstance<*, *>.initFlowDestination(
+inline fun <PARAM : Any, EVENT : ScreenEvent,
+    VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> FlowInstance<*, *>.initFlowDestination(
   flowDestination: FlowDestination<PARAM, EVENT, VIEWMODEL_TO_FLOW>
 ): Observable<EVENT> {
   val qualifier = StringQualifier(flowDestination.screen.screenTag)
@@ -82,7 +84,8 @@ inline fun <PARAM : Any, EVENT : ScreenEvent, VIEWMODEL_TO_FLOW : ViewModelToFlo
   return viewModelToFlow.screenEvents
 }
 
-inline fun <VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<out Any, out ScreenEvent>> FlowInstance<*, *>.getViewModelToFlow(
+inline fun <VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<out Any, out ScreenEvent>>
+    FlowInstance<*, *>.getViewModelToFlow(
   screen: Screen<*, *, *, VIEWMODEL_TO_FLOW>
 ): VIEWMODEL_TO_FLOW {
   val qualifier = StringQualifier(screen.screenTag)

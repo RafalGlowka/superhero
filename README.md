@@ -20,8 +20,7 @@ The purpose of this application is to show usage of some basic libraries and arc
 ![Hero details 2](screens/screen4.png)
 
 
-Further developement should be focused on:
-* detect
+Further development should be focused on:
 * androidTests
 * Support for animations and transitions
 * More consistent form of FlowInstance

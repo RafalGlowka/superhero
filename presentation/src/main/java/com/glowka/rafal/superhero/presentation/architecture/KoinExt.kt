@@ -40,7 +40,8 @@ fun <VM : ViewModelToViewInterface> BaseFragment<VM, *>.injectViewModel(): Lazy<
   }
 }
 
-fun <PARAM : Any, EVENT : ScreenEvent, VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> ScopeDSL.screenViewModel(
+fun <PARAM : Any, EVENT : ScreenEvent,
+    VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> ScopeDSL.screenViewModel(
   screen: Screen<PARAM, EVENT, *, VIEWMODEL_TO_FLOW>,
   override: Boolean = false,
   definition: Definition<ViewModelInterface<PARAM, EVENT>>

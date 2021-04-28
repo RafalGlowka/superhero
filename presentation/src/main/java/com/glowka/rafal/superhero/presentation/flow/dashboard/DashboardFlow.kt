@@ -12,9 +12,12 @@ import com.glowka.rafal.superhero.presentation.flow.dashboard.list.ListViewModel
 /**
  * Created by Rafal on 18.04.2021.
  */
+@Suppress("MaxLineLength")
 object DashboardFlow : FlowScope<EmptyParam, DashboardResult>(scopeName = "Dashboard") {
 
-  sealed class Screens<PARAM : Any, EVENT : ScreenEvent, VIEWMODEL_TO_VIEW : ViewModelToViewInterface, VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> :
+  sealed class Screens<PARAM : Any, EVENT : ScreenEvent,
+      VIEWMODEL_TO_VIEW : ViewModelToViewInterface,
+      VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> :
     Screen<PARAM, EVENT, VIEWMODEL_TO_VIEW, VIEWMODEL_TO_FLOW>(scope = this) {
 
     object List :

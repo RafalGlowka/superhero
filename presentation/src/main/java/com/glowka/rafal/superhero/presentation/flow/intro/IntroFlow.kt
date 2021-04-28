@@ -7,6 +7,7 @@ import com.glowka.rafal.superhero.presentation.architecture.*
  * Created by Rafal on 18.04.2021.
  */
 
+@Suppress("MaxLineLength")
 object IntroFlow : FlowScope<EmptyParam, IntroResult>(scopeName = "Intro") {
 
   sealed class Screens<PARAM : Any, EVENT : ScreenEvent, VIEWMODEL_TO_VIEW : ViewModelToViewInterface, VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> :
