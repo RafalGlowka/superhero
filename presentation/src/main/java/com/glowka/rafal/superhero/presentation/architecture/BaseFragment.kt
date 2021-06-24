@@ -14,7 +14,7 @@ import org.koin.core.component.KoinComponent
  * Created by Rafal on 13.04.2021.
  */
 abstract class BaseFragment<VIEW_MODEL : ViewModelToViewInterface, VIEW_BINDING : ViewDataBinding> :
-  KoinComponent, Fragment() {
+  Fragment() {
   protected val viewModel: VIEW_MODEL by injectViewModel()
   protected lateinit var viewBinding: VIEW_BINDING
   protected abstract val layoutResId: Int
@@ -28,6 +28,12 @@ abstract class BaseFragment<VIEW_MODEL : ViewModelToViewInterface, VIEW_BINDING 
     viewBinding.setVariable(BR.viewModel, viewModel)
     viewBinding.lifecycleOwner = viewLifecycleOwner
     return viewBinding.root
+  }
+
+  override fun onDestroy() {
+    viewBinding.setVariable(BR.viewModel, null)
+    viewBinding.lifecycleOwner = null
+    super.onDestroy()
   }
 
   fun onBackPressed(): Boolean {

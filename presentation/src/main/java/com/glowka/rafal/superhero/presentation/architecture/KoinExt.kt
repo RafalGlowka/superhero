@@ -1,6 +1,7 @@
 package com.glowka.rafal.superhero.presentation.architecture
 
 import com.glowka.rafal.superhero.domain.utils.logTag
+import org.koin.android.ext.android.getKoin
 import org.koin.core.definition.Definition
 import org.koin.core.definition.Definitions
 import org.koin.core.definition.Options

@@ -7,8 +7,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.SingleSubject
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
+import org.koin.core.context.GlobalContext
 import org.koin.core.qualifier.StringQualifier
 
 /**
@@ -22,10 +21,10 @@ data class FlowDestination<PARAM : Any, EVENT : ScreenEvent,
 
 abstract class FlowInstance<FLOW_PARAM, FLOW_RESULT : Any>(
   val flowScope: FlowScope<FLOW_PARAM, FLOW_RESULT>
-) : KoinComponent, DisposableHost by DisposableHostDelegate() {
+) : DisposableHost by DisposableHostDelegate() {
 
   private val fragmentNavigator: FragmentNavigator by lazy {
-    get()
+    GlobalContext.get().get()
   }
 
   private lateinit var resultSubject: SingleSubject<FLOW_RESULT>
@@ -71,7 +70,8 @@ abstract class FlowInstance<FLOW_PARAM, FLOW_RESULT : Any>(
   }
 }
 
-inline fun <PARAM : Any, EVENT : ScreenEvent,
+@Suppress("UNCHECKED_CAST")
+fun <PARAM : Any, EVENT : ScreenEvent,
     VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> FlowInstance<*, *>.initFlowDestination(
   flowDestination: FlowDestination<PARAM, EVENT, VIEWMODEL_TO_FLOW>
 ): Observable<EVENT> {
@@ -84,7 +84,8 @@ inline fun <PARAM : Any, EVENT : ScreenEvent,
   return viewModelToFlow.screenEvents
 }
 
-inline fun <VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<out Any, out ScreenEvent>>
+@Suppress("UNCHECKED_CAST")
+fun <VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<out Any, out ScreenEvent>>
     FlowInstance<*, *>.getViewModelToFlow(
   screen: Screen<*, *, *, VIEWMODEL_TO_FLOW>
 ): VIEWMODEL_TO_FLOW {
