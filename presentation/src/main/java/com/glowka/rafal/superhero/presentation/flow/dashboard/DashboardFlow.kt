@@ -13,12 +13,16 @@ import com.glowka.rafal.superhero.presentation.flow.dashboard.list.ListViewModel
  * Created by Rafal on 18.04.2021.
  */
 @Suppress("MaxLineLength")
-object DashboardFlow : FlowScope<EmptyParam, DashboardResult>(scopeName = "Dashboard") {
+interface DashboardFlow : Flow<EmptyParam, DashboardResult> {
+
+  companion object {
+    val SCOPE = DIScope("Dashboard")
+  }
 
   sealed class Screens<PARAM : Any, EVENT : ScreenEvent,
       VIEWMODEL_TO_VIEW : ViewModelToViewInterface,
       VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> :
-    Screen<PARAM, EVENT, VIEWMODEL_TO_VIEW, VIEWMODEL_TO_FLOW>(scope = this) {
+    Screen<PARAM, EVENT, VIEWMODEL_TO_VIEW, VIEWMODEL_TO_FLOW>(scope = SCOPE) {
 
     object List :
       Screens<EmptyParam, ListViewModelToFlowInterface.Event, ListViewModelToViewInterface, ListViewModelToFlowInterface>() {

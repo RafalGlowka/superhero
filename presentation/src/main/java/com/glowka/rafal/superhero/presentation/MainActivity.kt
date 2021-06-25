@@ -2,6 +2,7 @@ package com.glowka.rafal.superhero.presentation
 
 import android.os.Bundle
 import com.glowka.rafal.superhero.domain.utils.EmptyParam
+import com.glowka.rafal.superhero.domain.utils.inject
 import com.glowka.rafal.superhero.domain.utils.logE
 import com.glowka.rafal.superhero.presentation.architecture.BaseActivity
 import com.glowka.rafal.superhero.presentation.flow.intro.IntroFlow
@@ -19,7 +20,9 @@ class MainActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    IntroFlow.start(
+    val introFlow : IntroFlow by inject()
+    introFlow.start(
+      navigator = navigator,
       param = EmptyParam.EMPTY,
     ).subscribeBy(
       onSuccess = { result ->

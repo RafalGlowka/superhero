@@ -2,10 +2,7 @@ package com.glowka.rafal.superhero.presentation.flow.dashboard
 
 import com.glowka.rafal.superhero.domain.utils.EmptyParam
 import com.glowka.rafal.superhero.domain.utils.logD
-import com.glowka.rafal.superhero.presentation.architecture.FlowInstance
-import com.glowka.rafal.superhero.presentation.architecture.FlowScope
-import com.glowka.rafal.superhero.presentation.architecture.Screen
-import com.glowka.rafal.superhero.presentation.architecture.getViewModelToFlow
+import com.glowka.rafal.superhero.presentation.architecture.*
 import com.glowka.rafal.superhero.presentation.flow.dashboard.details.DetailsViewModelToFlowInterface
 import com.glowka.rafal.superhero.presentation.flow.dashboard.list.ListViewModelToFlowInterface
 import com.glowka.rafal.superhero.presentation.utils.exhaustive
@@ -17,8 +14,9 @@ sealed class DashboardResult {
   object Terminated : DashboardResult()
 }
 
-class DashboardFlowImpl(flowScope: FlowScope<EmptyParam, DashboardResult>) :
-  FlowInstance<EmptyParam, DashboardResult>(flowScope) {
+class DashboardFlowImpl :
+  BaseFlow<EmptyParam, DashboardResult>(flowScope = DashboardFlow.SCOPE), DashboardFlow {
+
   override fun onStart(param: EmptyParam): Screen<*, *, *, *> {
     switchScreen(
       screen = DashboardFlow.Screens.List,

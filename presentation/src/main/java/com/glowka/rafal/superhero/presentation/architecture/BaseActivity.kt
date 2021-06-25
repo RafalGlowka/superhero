@@ -2,19 +2,19 @@ package com.glowka.rafal.superhero.presentation.architecture
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import org.koin.android.ext.android.inject
+import com.glowka.rafal.superhero.presentation.R
 
 open class BaseActivity : AppCompatActivity() {
 
-  private val fragmentNavigatorAttachment: FragmentNavigatorAttachment by inject()
+  protected val navigator = FragmentNavigatorImpl(containerId = R.id.fragment_container)
 
   override fun onStart() {
     super.onStart()
-    fragmentNavigatorAttachment.attach(supportFragmentManager)
+    navigator.attach(supportFragmentManager)
   }
 
   override fun onStop() {
-    fragmentNavigatorAttachment.detach()
+    navigator.detach()
     super.onStop()
   }
 

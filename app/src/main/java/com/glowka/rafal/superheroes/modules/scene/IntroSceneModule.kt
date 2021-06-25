@@ -1,6 +1,5 @@
 package com.glowka.rafal.superheroes.modules.scene
 
-import com.glowka.rafal.superhero.presentation.architecture.flowInstance
 import com.glowka.rafal.superhero.presentation.architecture.scope
 import com.glowka.rafal.superhero.presentation.architecture.screenViewModel
 import com.glowka.rafal.superhero.presentation.flow.intro.IntroFlow
@@ -15,10 +14,11 @@ import org.koin.dsl.module
  */
 val introSceneModule = module {
 
-  scope(IntroFlow) {
-    flowInstance {
-      IntroFlowImpl(flowScope = IntroFlow)
-    }
+  single<IntroFlow> {
+    IntroFlowImpl(dashboardFlow = get())
+  }
+
+  scope(flowScope = IntroFlow.SCOPE) {
     fragment { IntroFragment() }
     screenViewModel(screen = IntroFlow.Screens.Start) {
       IntroViewModelImpl(

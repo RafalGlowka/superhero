@@ -14,7 +14,7 @@ abstract class Screen<
     VIEWMODEL_TO_VIEW : ViewModelToViewInterface,
     VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>
     >(
-  val scope: FlowScope<*, *>,
+  val scope: DIScope,
 ) {
   abstract val fragmentClass: KClass<out BaseFragment<VIEWMODEL_TO_VIEW, *>>
 }

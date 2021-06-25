@@ -17,10 +17,6 @@ import org.koin.dsl.module
  */
 val appModule = module {
 
-  single {
-    FragmentNavigatorImpl(containerId = R.id.fragment_container)
-  } binds arrayOf(FragmentNavigatorAttachment::class, FragmentNavigator::class)
-
   single<StringResolver> {
     StringResolverImpl(
       context = androidContext()

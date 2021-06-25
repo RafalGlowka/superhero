@@ -54,12 +54,3 @@ fun <PARAM : Any, EVENT : ScreenEvent,
     scopeQualifier = named(screen.scope.scopeName)
   ) binds arrayOf(ViewModelToFlowInterface::class, BaseViewModel::class)
 }
-
-fun ScopeDSL.flowInstance(override: Boolean = false, definition: Definition<FlowInstance<*, *>>) {
-  definitions += Definitions.createSingle(
-    qualifier = named(FlowScope.FLOW_INSTANCE),
-    definition = definition,
-    options = Options(isCreatedAtStart = false, override = override),
-    scopeQualifier = scopeQualifier
-  ) binds arrayOf(FlowInstance::class)
-}

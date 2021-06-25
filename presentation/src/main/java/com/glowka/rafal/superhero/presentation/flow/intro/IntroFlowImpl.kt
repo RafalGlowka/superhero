@@ -2,8 +2,7 @@ package com.glowka.rafal.superhero.presentation.flow.intro
 
 import com.glowka.rafal.superhero.domain.utils.EmptyParam
 import com.glowka.rafal.superhero.domain.utils.logE
-import com.glowka.rafal.superhero.presentation.architecture.FlowInstance
-import com.glowka.rafal.superhero.presentation.architecture.FlowScope
+import com.glowka.rafal.superhero.presentation.architecture.BaseFlow
 import com.glowka.rafal.superhero.presentation.architecture.Screen
 import com.glowka.rafal.superhero.presentation.flow.dashboard.DashboardFlow
 import com.glowka.rafal.superhero.presentation.flow.dashboard.DashboardResult
@@ -17,8 +16,10 @@ sealed class IntroResult {
   object Terminated : IntroResult()
 }
 
-class IntroFlowImpl(flowScope: FlowScope<EmptyParam, IntroResult>) :
-  FlowInstance<EmptyParam, IntroResult>(flowScope) {
+class IntroFlowImpl(
+  val dashboardFlow: DashboardFlow,
+) :
+  BaseFlow<EmptyParam, IntroResult>(flowScope = IntroFlow.SCOPE), IntroFlow {
 
   override fun onStart(param: EmptyParam): Screen<*, *, *, *> {
     switchScreen(
@@ -32,10 +33,7 @@ class IntroFlowImpl(flowScope: FlowScope<EmptyParam, IntroResult>) :
   private fun onStartEvent(event: IntroViewModelToFlowInterface.Event) {
     when (event) {
       IntroViewModelToFlowInterface.Event.Finished -> {
-        startFlow(
-          flowScope = DashboardFlow,
-          param = EmptyParam.EMPTY
-        ).subscribeBy(
+        dashboardFlow.start(navigator = navigator, param = EmptyParam.EMPTY).subscribeBy(
           onSuccess = { result ->
             when (result) {
               DashboardResult.Terminated -> finish(result = IntroResult.Terminated)

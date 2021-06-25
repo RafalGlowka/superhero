@@ -1,6 +1,5 @@
 package com.glowka.rafal.superheroes.modules.scene
 
-import com.glowka.rafal.superhero.presentation.architecture.flowInstance
 import com.glowka.rafal.superhero.presentation.architecture.scope
 import com.glowka.rafal.superhero.presentation.architecture.screenViewModel
 import com.glowka.rafal.superhero.presentation.flow.dashboard.DashboardFlow
@@ -17,10 +16,12 @@ import org.koin.dsl.module
  */
 val dashboardSceneModule = module {
 
-  scope(DashboardFlow) {
-    flowInstance {
-      DashboardFlowImpl(flowScope = DashboardFlow)
-    }
+  single<DashboardFlow> {
+    DashboardFlowImpl()
+  }
+
+  scope(flowScope = DashboardFlow.SCOPE) {
+
     fragment { ListFragment() }
     screenViewModel(screen = DashboardFlow.Screens.List) {
       ListViewModelImpl(
