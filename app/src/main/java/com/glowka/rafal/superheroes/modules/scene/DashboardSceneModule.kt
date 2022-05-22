@@ -1,6 +1,7 @@
 package com.glowka.rafal.superheroes.modules.scene
 
-import com.glowka.rafal.superhero.presentation.architecture.scope
+import com.glowka.rafal.superhero.presentation.architecture.businessFlow
+import com.glowka.rafal.superhero.presentation.architecture.screen
 import com.glowka.rafal.superhero.presentation.architecture.screenViewModel
 import com.glowka.rafal.superhero.presentation.flow.dashboard.DashboardFlow
 import com.glowka.rafal.superhero.presentation.flow.dashboard.DashboardFlowImpl
@@ -20,23 +21,11 @@ val dashboardSceneModule = module {
     DashboardFlowImpl()
   }
 
-  scope(flowScope = DashboardFlow.SCOPE) {
-
-    fragment { ListFragment() }
-    screenViewModel(screen = DashboardFlow.Screens.List) {
-      ListViewModelImpl(
-        stringResolver = get(),
-        loadFavouritesUseCase = get(),
-        searchByNameUseCase = get(),
-      )
-    }
-    fragment { DetailsFragment() }
-    screenViewModel(screen = DashboardFlow.Screens.Details) {
-      DetailsViewModelImpl(
-        stringResolver = get(),
-        changeIsHeroFavouriteUseCase = get()
-      )
-    }
+  businessFlow(
+    scopeName = DashboardFlow.SCOPE_NAME,
+  ) {
+    screen(screen = DashboardFlow.Screens.List)
+    screen(screen = DashboardFlow.Screens.Details)
   }
 
 }

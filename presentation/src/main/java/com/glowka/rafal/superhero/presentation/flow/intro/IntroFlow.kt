@@ -11,15 +11,11 @@ import com.glowka.rafal.superhero.presentation.architecture.*
 interface IntroFlow : Flow<EmptyParam, IntroResult> {
 
   companion object {
-    val SCOPE = DIScope(scopeName = "Intro")
+    const val SCOPE_NAME = "Intro"
   }
 
-  sealed class Screens<PARAM : Any, EVENT : ScreenEvent, VIEWMODEL_TO_VIEW : ViewModelToViewInterface, VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> :
-    Screen<PARAM, EVENT, VIEWMODEL_TO_VIEW, VIEWMODEL_TO_FLOW>(scope = SCOPE) {
-
-    object Start :
-      Screens<EmptyParam, IntroViewModelToFlowInterface.Event, IntroViewModelToViewInterface, IntroViewModelToFlowInterface>() {
-      override val fragmentClass = IntroFragment::class
-    }
+  sealed class Screens<PARAM : Any, EVENT : ScreenEvent, VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>>(screenStructure: ScreenStructure<PARAM, EVENT, VIEWMODEL_TO_FLOW, *>) :
+    Screen<PARAM, EVENT, VIEWMODEL_TO_FLOW>(flowScopeName = SCOPE_NAME, screenStructure = screenStructure) {
+    object Start : Screens<EmptyParam, IntroViewModelToFlowInterface.Event, IntroViewModelToFlowInterface>(screenStructure = IntroScreenStructure)
   }
 }

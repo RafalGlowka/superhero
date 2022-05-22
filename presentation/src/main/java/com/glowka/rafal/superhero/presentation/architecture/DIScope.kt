@@ -14,24 +14,25 @@ import org.koin.dsl.ScopeDSL
  *
  */
 
-class DIScope(
-  val scopeName: String,
-) {
-
-  fun createScope(): Scope {
-    return GlobalContext.get().getOrCreateScope(scopeName, named(scopeName))
+fun Flow<*, *>.createScope(): Scope {
+    return GlobalContext.get().getOrCreateScope(flowScopeName, named(flowScopeName))
   }
 
-  fun closeScope() {
-    val scope = GlobalContext.get().getScopeOrNull(scopeName)
+fun Flow<*, *>.closeScope() {
+    val scope = GlobalContext.get().getScopeOrNull(flowScopeName)
     if (scope == null) {
-      logE("scope $scopeName do not exist !")
+      logE("scope $flowScopeName do not exist !")
       return
     }
     scope.close()
   }
 
+inline fun Module.businessFlow(
+  scopeName : String,
+  noinline scopeSet: ScopeDSL.() -> Unit
+) {
+  scope(
+    named(scopeName),
+    scopeSet
+  )
 }
-
-fun Module.scope(flowScope: DIScope, scopeSet: ScopeDSL.() -> Unit) =
-  scope(named(flowScope.scopeName), scopeSet)

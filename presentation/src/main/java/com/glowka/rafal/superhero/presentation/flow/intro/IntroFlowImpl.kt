@@ -19,9 +19,9 @@ sealed class IntroResult {
 class IntroFlowImpl(
   val dashboardFlow: DashboardFlow,
 ) :
-  BaseFlow<EmptyParam, IntroResult>(flowScope = IntroFlow.SCOPE), IntroFlow {
+  BaseFlow<EmptyParam, IntroResult>(flowScopeName = IntroFlow.SCOPE_NAME), IntroFlow {
 
-  override fun onStart(param: EmptyParam): Screen<*, *, *, *> {
+  override fun onStart(param: EmptyParam): Screen<*, *, *> {
     switchScreen(
       screen = IntroFlow.Screens.Start,
       param = EmptyParam.EMPTY,

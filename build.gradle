@@ -10,8 +10,8 @@ subprojects {
 
 buildscript {
     ext.kotlin_version = "1.6.21"
-    ext.koin_version = "2.2.3"
-    ext.gradleplugin_version = '7.2.0'
+    ext.koin_version = "3.2.0"
+    ext.gradleplugin_version = '7.2.1'
     ext.detect_version = "1.16.0"
 
     // Libraries

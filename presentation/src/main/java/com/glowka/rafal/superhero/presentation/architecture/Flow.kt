@@ -7,7 +7,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.subjects.SingleSubject
-import org.koin.core.context.GlobalContext
 import org.koin.core.qualifier.StringQualifier
 
 /**
@@ -15,28 +14,27 @@ import org.koin.core.qualifier.StringQualifier
  */
 data class FlowDestination<PARAM : Any, EVENT : ScreenEvent,
     VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>>(
-  val screen: Screen<PARAM, EVENT, *, VIEWMODEL_TO_FLOW>,
+  val screen: Screen<PARAM, EVENT, VIEWMODEL_TO_FLOW>,
   val param: PARAM
 )
 
 interface Flow <FLOW_PARAM, FLOW_RESULT : Any> {
-  fun start(navigator: FragmentNavigator, param: FLOW_PARAM): Single<FLOW_RESULT>
+  val flowScopeName : String
+  fun start(navigator: ScreenNavigator, param: FLOW_PARAM): Single<FLOW_RESULT>
   fun finish(result: FLOW_RESULT)
 }
 
-abstract class BaseFlow<FLOW_PARAM, FLOW_RESULT : Any>(
-  val flowScope: DIScope
-) : Flow<FLOW_PARAM, FLOW_RESULT>, DisposableHost by DisposableHostDelegate() {
+abstract class BaseFlow<FLOW_PARAM, FLOW_RESULT : Any>(override val flowScopeName: String) : Flow<FLOW_PARAM, FLOW_RESULT>, DisposableHost by DisposableHostDelegate() {
 
-  protected lateinit var navigator: FragmentNavigator
+  protected lateinit var navigator: ScreenNavigator
 
   private lateinit var resultSubject: SingleSubject<FLOW_RESULT>
 
-  private var firstScreen: Screen<*, *, *, *>? = null
+  private var firstScreen: Screen<*, *, *>? = null
 
-  abstract fun onStart(param: FLOW_PARAM): Screen<*, *, *, *>
+  abstract fun onStart(param: FLOW_PARAM): Screen<*, *, *>
 
-  override fun start(navigator: FragmentNavigator, param: FLOW_PARAM): Single<FLOW_RESULT> {
+  override fun start(navigator: ScreenNavigator, param: FLOW_PARAM): Single<FLOW_RESULT> {
     this.navigator = navigator
     resultSubject = SingleSubject.create()
     return resultSubject.doOnSubscribe {
@@ -45,7 +43,7 @@ abstract class BaseFlow<FLOW_PARAM, FLOW_RESULT : Any>(
   }
 
   fun <PARAM : Any, EVENT : ScreenEvent, VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>> switchScreen(
-    screen: Screen<PARAM, EVENT, *, VIEWMODEL_TO_FLOW>,
+    screen: Screen<PARAM, EVENT, VIEWMODEL_TO_FLOW>,
     param: PARAM,
     onEvent: (EVENT) -> Unit
   ) {
@@ -58,14 +56,14 @@ abstract class BaseFlow<FLOW_PARAM, FLOW_RESULT : Any>(
     ).disposedByHost()
   }
 
-  fun switchBackTo(screen: Screen<*, *, *, *>) {
+  fun switchBackTo(screen: Screen<*, *, *>) {
     navigator.popBackTo(screen = screen)
   }
 
   override fun finish(result: FLOW_RESULT) {
     disposeAll()
     resultSubject.onSuccess(result)
-    flowScope.closeScope()
+    closeScope()
   }
 }
 
@@ -75,22 +73,22 @@ fun <PARAM : Any, EVENT : ScreenEvent,
   flowDestination: FlowDestination<PARAM, EVENT, VIEWMODEL_TO_FLOW>
 ): Observable<EVENT> {
   val qualifier = StringQualifier(flowDestination.screen.screenTag)
-  val scope = flowScope.createScope()
+  val scope = createScope()
   val viewModelToFlow =
     scope.get<ViewModelToFlowInterface<*, *>>(qualifier = qualifier) as? VIEWMODEL_TO_FLOW
   viewModelToFlow?.init(param = flowDestination.param)
-    ?: throw IllegalStateException("Missing ${flowDestination.screen.screenTag} in the scope ${flowScope.scopeName}")
+    ?: throw IllegalStateException("Missing ${flowDestination.screen.screenTag} in the scope $flowScopeName")
   return viewModelToFlow.screenEvents
 }
 
 @Suppress("UNCHECKED_CAST")
 fun <VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<out Any, out ScreenEvent>>
     BaseFlow<*, *>.getViewModelToFlow(
-  screen: Screen<*, *, *, VIEWMODEL_TO_FLOW>
+  screen: Screen<*, *, VIEWMODEL_TO_FLOW>
 ): VIEWMODEL_TO_FLOW {
   val qualifier = StringQualifier(screen.screenTag)
-  val scope = flowScope.createScope()
+  val scope = createScope()
   return scope.get<ViewModelToFlowInterface<*, *>>(qualifier = qualifier) as? VIEWMODEL_TO_FLOW
-    ?: throw IllegalStateException("Missing ${screen.screenTag} in the scope ${flowScope.scopeName}")
+    ?: throw IllegalStateException("Missing ${screen.screenTag} in the scope $flowScopeName")
 }
 

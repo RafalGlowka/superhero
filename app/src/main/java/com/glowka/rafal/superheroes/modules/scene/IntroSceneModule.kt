@@ -1,6 +1,7 @@
 package com.glowka.rafal.superheroes.modules.scene
 
-import com.glowka.rafal.superhero.presentation.architecture.scope
+import com.glowka.rafal.superhero.presentation.architecture.businessFlow
+import com.glowka.rafal.superhero.presentation.architecture.screen
 import com.glowka.rafal.superhero.presentation.architecture.screenViewModel
 import com.glowka.rafal.superhero.presentation.flow.intro.IntroFlow
 import com.glowka.rafal.superhero.presentation.flow.intro.IntroFlowImpl
@@ -18,13 +19,10 @@ val introSceneModule = module {
     IntroFlowImpl(dashboardFlow = get())
   }
 
-  scope(flowScope = IntroFlow.SCOPE) {
-    fragment { IntroFragment() }
-    screenViewModel(screen = IntroFlow.Screens.Start) {
-      IntroViewModelImpl(
-        prepareCacheUseCase = get()
-      )
-    }
+  businessFlow(
+    scopeName = IntroFlow.SCOPE_NAME,
+  ) {
+    screen(screen = IntroFlow.Screens.Start)
   }
 
 }

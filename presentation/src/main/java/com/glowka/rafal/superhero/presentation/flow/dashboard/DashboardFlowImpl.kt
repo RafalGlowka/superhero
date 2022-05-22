@@ -15,9 +15,9 @@ sealed class DashboardResult {
 }
 
 class DashboardFlowImpl :
-  BaseFlow<EmptyParam, DashboardResult>(flowScope = DashboardFlow.SCOPE), DashboardFlow {
+  BaseFlow<EmptyParam, DashboardResult>(flowScopeName = DashboardFlow.SCOPE_NAME), DashboardFlow {
 
-  override fun onStart(param: EmptyParam): Screen<*, *, *, *> {
+  override fun onStart(param: EmptyParam): Screen<*, *, *> {
     switchScreen(
       screen = DashboardFlow.Screens.List,
       param = EmptyParam.EMPTY,
