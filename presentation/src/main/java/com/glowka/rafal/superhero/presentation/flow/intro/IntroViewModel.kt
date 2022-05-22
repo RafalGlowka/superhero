@@ -35,7 +35,8 @@ class IntroViewModelImpl(
     prepareCacheUseCase(param = EmptyParam.EMPTY).subscribeBy(
       onComplete = { /* nop */ },
       onError = { error -> logE("prepare cache", error) }
-    ).disposedByHost()
+    )
+//      .disposedByHost()
   }
 
   override fun introFinished() {

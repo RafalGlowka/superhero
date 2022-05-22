@@ -46,7 +46,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
-    implementation "io.insert-koin:koin-androidx-fragment:$koin_version"
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
 
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
