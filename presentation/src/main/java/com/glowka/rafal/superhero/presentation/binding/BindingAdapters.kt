@@ -19,17 +19,17 @@ fun LottieAnimationView.onAnimationFinished(listener: (() -> Unit)?) {
   }
 
   addAnimatorListener(object : Animator.AnimatorListener {
-    override fun onAnimationStart(p0: Animator?) {
+    override fun onAnimationStart(p0: Animator) {
       logD("animStarted")
     }
 
-    override fun onAnimationEnd(p0: Animator?) {
+    override fun onAnimationEnd(p0: Animator) {
       logD("animFinished")
       listener()
     }
 
-    override fun onAnimationCancel(p0: Animator?) {}
-    override fun onAnimationRepeat(p0: Animator?) {}
+    override fun onAnimationCancel(p0: Animator) {}
+    override fun onAnimationRepeat(p0: Animator) {}
   })
 }
 
@@ -49,6 +49,8 @@ fun ImageView.loadImage(image: ImageModel) {
     glide.into(this)
   } ?: if (image.fallbackImageResId != 0) {
     setImageResource(image.fallbackImageResId)
+  } else {
+    Unit
   }
 }
 
