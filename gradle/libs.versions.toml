@@ -1,0 +1,69 @@
+[versions]
+
+compileSdk = "34"
+minSdk = "24"
+targetSdk = "34"
+
+kotlin = "1.8.20"
+koin = "3.2.0"
+gradleplugin = '8.1.1'
+detekt = "1.23.0"
+
+#Libraries
+lottie = "3.6.1"
+okhttp = "4.10.0"
+rxkotlin = "2.4.0"
+rxandroid = "2.1.1"
+gson = "2.10.1"
+fastadapter = "5.4.0"
+glide = "4.15.1"
+android_material = "1.9.0"
+androidx_core = "1.10.1"
+androidx_appcombat = "1.6.1"
+androidx_constraint = "2.1.4"
+androidx_fragment = "1.6.1"
+leakcanary = "2.8.1"
+
+# Testing
+junit = "4.+"
+junitandroidx = "1.1.5"
+mockk = "1.11.0"
+espresso = "3.3.0"
+
+[libraries]
+
+android-material = { module = "com.google.android.material:material", version.ref = "android_material" }
+androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx_core" }
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx_appcombat" }
+androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx_constraint" }
+androidx-fragment-ktx = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx_fragment" }
+androidx-test-ext = { module = "androidx.test.ext:junit", version.ref = "junitandroidx" }
+androidx-test-espresso = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
+
+fastadapter-core = { module = "com.mikepenz:fastadapter", version.ref = "fastadapter" }
+fastadapter-extensions = { module = "com.mikepenz:fastadapter-extensions-diff", version.ref = "fastadapter" }
+
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
+lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
+
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+rxjava2-rxkotlin = { module = "io.reactivex.rxjava2:rxkotlin", version.ref = "rxkotlin" }
+rxjava2-rxandroid = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rxandroid" }
+
+junit = { module = "junit:junit", version.ref = "junit" }
+detekt = { module = "io.nlopez.compose.rules:detekt", version.ref = "detekt" }
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "gradleplugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

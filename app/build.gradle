@@ -5,12 +5,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion project.ext.compileSdkVersion
+    compileSdkVersion libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
+        minSdkVersion libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
         applicationId "com.glowka.rafal.superhero"
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
@@ -44,10 +44,10 @@ dependencies {
     implementation project(":data")
     implementation project(":domain")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "io.insert-koin:koin-core:$koin_version"
-    implementation "io.insert-koin:koin-android:$koin_version"
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation libs.kotlin.stdlib
+    implementation libs.koin.core
+    implementation libs.koin.android
+    implementation libs.okhttp
 
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+    debugImplementation libs.leakcanary.android
 }

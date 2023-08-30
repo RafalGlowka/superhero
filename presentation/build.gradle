@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion project.ext.compileSdkVersion
+    compileSdkVersion libs.versions.compileSdk.get().toInteger()
 
     defaultConfig {
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
+        minSdkVersion libs.versions.minSdk.get().toInteger()
+        targetSdkVersion libs.versions.targetSdk.get().toInteger()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -43,22 +43,22 @@ android {
 dependencies {
     implementation project(":domain")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "io.insert-koin:koin-core:$koin_version"
-    implementation "io.insert-koin:koin-android:$koin_version"
-    implementation "com.airbnb.android:lottie:$lottie_version"
-    implementation 'com.google.android.material:material:1.9.0'
-    implementation "androidx.core:core-ktx:$androidx_core_version"
-    implementation "androidx.appcompat:appcompat:$androidx_appcombat_version"
-    implementation "androidx.constraintlayout:constraintlayout:$androidx_constraint_version"
-    implementation "androidx.fragment:fragment-ktx:$androidx_fragment_version"
-    implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
-    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
-    implementation "com.mikepenz:fastadapter:$fastadapter_version"
-    implementation "com.mikepenz:fastadapter-extensions-diff:$fastadapter_version"
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    testImplementation "junit:junit:$junit_version"
-    testImplementation "io.mock:mockk:$mockk_version"
-    androidTestImplementation "androidx.test.ext:junit:$junitandroidx_version"
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation libs.kotlin.stdlib
+    implementation libs.koin.core
+    implementation libs.koin.android
+    implementation libs.lottie
+    implementation libs.android.material
+    implementation libs.androidx.core
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.fragment.ktx
+    implementation libs.rxjava2.rxkotlin
+    implementation libs.rxjava2.rxandroid
+    implementation libs.fastadapter.core
+    implementation libs.fastadapter.extensions
+    implementation libs.glide
+    testImplementation libs.junit
+    testImplementation libs.mockk
+    androidTestImplementation libs.androidx.test.ext
+    androidTestImplementation libs.androidx.test.espresso
 }

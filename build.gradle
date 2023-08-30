@@ -1,50 +1,7 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-subprojects {
-    ext {
-        compileSdkVersion = 34
-        minSdkVersion = 24
-        targetSdkVersion = 34
-    }
-}
-
-
-buildscript {
-    ext.kotlin_version = "1.8.20"
-    ext.koin_version = "3.2.0"
-    ext.gradleplugin_version = '8.1.1'
-    ext.detect_version = "1.16.0"
-
-    // Libraries
-    ext.lottie_version = "3.6.1"
-    ext.okhttp_version = "4.10.0"
-    ext.rxkotlin_version = "2.4.0"
-    ext.rxandroid_version = "2.1.1"
-    ext.gson_version = "2.10.1"
-    ext.fastadapter_version = "5.4.0"
-    ext.glide_version = "4.15.1"
-    ext.androidx_core_version = "1.10.1"
-    ext.androidx_appcombat_version = "1.6.1"
-    ext.androidx_constraint_version = "2.1.4"
-    ext.androidx_fragment_version = "1.6.1"
-    ext.leakcanary_version = "2.8.1"
-
-    // Testing
-    ext.junit_version = "4.+"
-    ext.junitandroidx_version = "1.1.5"
-    ext.mockk_version = "1.11.0"
-
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:$gradleplugin_version"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detect_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.detekt) apply true
 }
 
 subprojects {
@@ -55,11 +12,11 @@ subprojects {
     }
 
     dependencies {
-        detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$detect_version"
+        detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:${libs.versions.detekt.get()}"
     }
 
     tasks.withType(io.gitlab.arturbosch.detekt.Detekt) {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
         include "**/*.kt"
         include "**/*.kts"
         exclude "**/resources/"
@@ -72,7 +29,6 @@ subprojects {
         }
     }
 }
-
 
 allprojects {
     repositories {
