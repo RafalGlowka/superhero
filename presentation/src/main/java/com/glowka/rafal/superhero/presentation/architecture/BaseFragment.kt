@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.glowka.rafal.superhero.presentation.BR
-import org.koin.core.component.KoinComponent
 
 /**
  * Created by Rafal on 13.04.2021.
@@ -31,8 +30,10 @@ abstract class BaseFragment<VIEW_MODEL : ViewModelToViewInterface, VIEW_BINDING 
   }
 
   override fun onDestroy() {
-    viewBinding.setVariable(BR.viewModel, null)
-    viewBinding.lifecycleOwner = null
+    if (this::viewBinding.isInitialized) {
+      viewBinding.setVariable(BR.viewModel, null)
+      viewBinding.lifecycleOwner = null
+    }
     super.onDestroy()
   }
 

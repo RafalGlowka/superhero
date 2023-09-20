@@ -3,7 +3,11 @@ package com.glowka.rafal.superhero.data
 import com.glowka.rafal.superhero.data.repository.cache.HeroCache
 import com.glowka.rafal.superhero.data.repository.cache.HeroCacheImpl
 import com.glowka.rafal.superhero.domain.model.Hero
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.unmockkAll
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -14,7 +18,7 @@ import org.junit.Test
  */
 class HeroCacheTest {
 
-  lateinit var cache: HeroCache
+  private lateinit var cache: HeroCache
 
   @Before
   fun prepare() {

@@ -3,9 +3,16 @@ package com.glowka.rafal.superhero.data
 import android.content.SharedPreferences
 import com.glowka.rafal.superhero.data.remote.JSONSerializer
 import com.glowka.rafal.superhero.data.repository.FavouritesRepositoryImpl
+import com.glowka.rafal.superhero.data.repository.sharedpreferences.FakeSharedPreferencesRepository
 import com.glowka.rafal.superhero.domain.repository.FavouritesRepository
-import io.mockk.*
+import io.mockk.MockKAnnotations
+import io.mockk.clearAllMocks
+import io.mockk.confirmVerified
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
+import io.mockk.unmockkAll
+import io.mockk.verify
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -21,13 +28,13 @@ class FavouritesRepositoryTest {
   @MockK
   private lateinit var jsonSerializer: JSONSerializer
 
-  lateinit var repository: FavouritesRepository
+  private lateinit var repository: FavouritesRepository
 
   @Before
   fun prepare() {
     MockKAnnotations.init(this)
     repository = FavouritesRepositoryImpl(
-      sharedPreferences = sharedPreferences,
+      sharedPreferencesRepository = FakeSharedPreferencesRepository(sharedPreferences),
       jsonSerializer = jsonSerializer,
     )
   }

@@ -11,7 +11,7 @@ abstract class Screen<
     EVENT : ScreenEvent,
     VIEWMODEL_TO_FLOW : ViewModelToFlowInterface<PARAM, EVENT>
     >(
-  val flowScopeName : String,
+  val flowScopeName: String,
   val screenStructure: ScreenStructure<PARAM, EVENT, VIEWMODEL_TO_FLOW, *>,
 )
 

@@ -20,7 +20,7 @@ class MainActivity : BaseActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
 
-    val introFlow : IntroFlow by inject()
+    val introFlow: IntroFlow by inject()
     introFlow.start(
       navigator = navigator,
       param = EmptyParam.EMPTY,

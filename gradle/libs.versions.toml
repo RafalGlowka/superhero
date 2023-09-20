@@ -4,7 +4,7 @@ compileSdk = "34"
 minSdk = "24"
 targetSdk = "34"
 
-kotlin = "1.8.20"
+kotlin = "1.8.22"
 koin = "3.2.0"
 gradleplugin = '8.1.1'
 detekt = "1.23.0"
@@ -18,7 +18,7 @@ gson = "2.10.1"
 fastadapter = "5.4.0"
 glide = "4.15.1"
 android_material = "1.9.0"
-androidx_core = "1.10.1"
+androidx_core = "1.12.0"
 androidx_appcombat = "1.6.1"
 androidx_constraint = "2.1.4"
 androidx_fragment = "1.6.1"
@@ -27,8 +27,8 @@ leakcanary = "2.8.1"
 # Testing
 junit = "4.+"
 junitandroidx = "1.1.5"
-mockk = "1.11.0"
-espresso = "3.3.0"
+mockk = "1.12.1"
+espresso = "3.5.1"
 
 [libraries]
 

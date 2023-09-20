@@ -27,7 +27,9 @@ fun <VM : ViewModelToViewInterface> BaseFragment<VM, *>.injectViewModel(): Lazy<
     val qualifier = StringQualifier(screenTag)
 
     val viewModel = try {
-      scope.get(clazz = BaseViewModel::class, qualifier = qualifier, parameters = null) as? BaseViewModel<*, *> ?: throw TypeCastException("Incorrect ViewModel base type")
+      scope.get(
+        clazz = BaseViewModel::class, qualifier = qualifier, parameters = null
+      ) as? BaseViewModel<*, *> ?: throw TypeCastException("Incorrect ViewModel base type")
     } catch (error: NoBeanDefFoundException) {
       throw java.lang.RuntimeException("Missing viewModel for screen $screenTag in scope $scopeName")
     }

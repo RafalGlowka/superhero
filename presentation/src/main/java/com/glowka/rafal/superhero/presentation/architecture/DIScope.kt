@@ -15,20 +15,20 @@ import org.koin.dsl.ScopeDSL
  */
 
 fun Flow<*, *>.createScope(): Scope {
-    return GlobalContext.get().getOrCreateScope(flowScopeName, named(flowScopeName))
-  }
+  return GlobalContext.get().getOrCreateScope(flowScopeName, named(flowScopeName))
+}
 
 fun Flow<*, *>.closeScope() {
-    val scope = GlobalContext.get().getScopeOrNull(flowScopeName)
-    if (scope == null) {
-      logE("scope $flowScopeName do not exist !")
-      return
-    }
-    scope.close()
+  val scope = GlobalContext.get().getScopeOrNull(flowScopeName)
+  if (scope == null) {
+    logE("scope $flowScopeName do not exist !")
+    return
   }
+  scope.close()
+}
 
 inline fun Module.businessFlow(
-  scopeName : String,
+  scopeName: String,
   noinline scopeSet: ScopeDSL.() -> Unit
 ) {
   scope(

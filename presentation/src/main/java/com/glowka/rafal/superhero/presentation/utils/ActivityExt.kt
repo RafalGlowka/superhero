@@ -16,7 +16,9 @@ fun Activity.setLightTextColor(lightStatusBarTextColor: Boolean = true) {
       )
     }
   } else @Suppress("DEPRECATION") {
-    val visibilityFlagState = window?.decorView?.systemUiVisibility?.and(android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR) ?: 0
+    val visibilityFlagState = window?.decorView?.systemUiVisibility?.and(
+      android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+    ) ?: 0
     if (lightStatusBarTextColor) {
       if (visibilityFlagState > 0) {
         window?.decorView?.apply {

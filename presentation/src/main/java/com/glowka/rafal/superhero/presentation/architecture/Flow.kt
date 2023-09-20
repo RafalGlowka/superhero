@@ -18,13 +18,14 @@ data class FlowDestination<PARAM : Any, EVENT : ScreenEvent,
   val param: PARAM
 )
 
-interface Flow <FLOW_PARAM, FLOW_RESULT : Any> {
-  val flowScopeName : String
+interface Flow<FLOW_PARAM, FLOW_RESULT : Any> {
+  val flowScopeName: String
   fun start(navigator: ScreenNavigator, param: FLOW_PARAM): Single<FLOW_RESULT>
   fun finish(result: FLOW_RESULT)
 }
 
-abstract class BaseFlow<FLOW_PARAM, FLOW_RESULT : Any>(override val flowScopeName: String) : Flow<FLOW_PARAM, FLOW_RESULT>, DisposableHost by DisposableHostDelegate() {
+abstract class BaseFlow<FLOW_PARAM, FLOW_RESULT : Any>(override val flowScopeName: String) :
+  Flow<FLOW_PARAM, FLOW_RESULT>, DisposableHost by DisposableHostDelegate() {
 
   protected lateinit var navigator: ScreenNavigator
 
